@@ -9,7 +9,7 @@ class Star extends Component {
 
         // Setting state with an = is something you only want to do in the constructor.
         // Outside of the constructor always use the setState method
-        this.state = { starName: 'Menkar', brightness: 5 }
+        this.state = { star: { starName: 'Menkar', brightness: 5 } }
 
 
         // Make sure that the handleChange knows about 'this'
@@ -17,27 +17,21 @@ class Star extends Component {
         // this.handleChange.brightness = this.handleChange.bind( this.brightness );
     }
 
-    handleChangeForName = ( event ) => {
-        console.log( event.target );
+    handleChange = ( propertyName ) => ( event ) => {
+        console.log( propertyName );
         // Change state using setState not an =
-        this.setState( { ...this.state, starName: event.target.value } );
-    }
-
-    handleChangeForBrightness = ( event ) => {
-        console.log( event.target );
-        // Change state using setState not an =
-        this.setState( { ...this.state, brightness: event.target.value } );    
-    }
-        // either this or do handleChange( event ) => {
-        // don't need this.handleChange above if you do this
+        this.setState( { star: { 
+            ...this.state.star,
+            [ propertyName ]: event.target.value }});
+        }
 
     render() {
         return (
             <div>
                 <h2>The Best Star Ever</h2>
-                <input onChange={ this.handleChangeForName } />
-                <input onChange={ this.handleChangeForBrightness } />
-                <p>A star named { this.state.starName } with Brightness of { this.state.brightness }</p>
+                <input onChange={ this.handleChange( 'starName' ) } />
+                <input onChange={ this.handleChange( 'brightness' ) } />
+                <p>A star named { this.state.star.starName } with Brightness of { this.state.star.brightness }</p>
             </div>
         );
     }

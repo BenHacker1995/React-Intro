@@ -9,7 +9,10 @@ class Star extends Component {
 
         // Setting state with an = is something you only want to do in the constructor.
         // Outside of the constructor always use the setState method
-        this.state = { star: { starName: 'Menkar', brightness: 5 } }
+        this.state = { 
+            star: { starName: '', brightness: '' },
+            starList: []
+        }
 
 
         // Make sure that the handleChange knows about 'this'
@@ -25,13 +28,29 @@ class Star extends Component {
             [ propertyName ]: event.target.value }});
         }
 
+    handleSubmit = () => {
+        this.setState({ starList: [ ...this.state.starList, this.state.star ]});
+        this.setState({ star: { starName: '', brightness: '' }});
+        console.log( 'The star is: ', this.state.star );
+    }
+
     render() {
         return (
             <div>
                 <h2>The Best Star Ever</h2>
-                <input onChange={ this.handleChange( 'starName' ) } />
-                <input onChange={ this.handleChange( 'brightness' ) } />
-                <p>A star named { this.state.star.starName } with Brightness of { this.state.star.brightness }</p>
+                <input onChange={ this.handleChange( 'starName' ) }
+                value={ this.state.star.starName } placeholder="Name" />
+
+                <input onChange={ this.handleChange( 'brightness' ) }
+                value={ this.state.star.brightness } placeholder="Brightness" />
+
+                <button onClick={ this.handleSubmit }>Add</button>
+                <ul>
+                { this.state.starList.map( star => 
+                    <li>{ star.starName } has brightness { star.brightness }</li>
+                    )
+                }
+                </ul>
             </div>
         );
     }

@@ -1,8 +1,18 @@
 import React, { Component } from 'react';
+import Star from '../Star/Star';
 
-class Star extends Component {
-    constructor( props ) {
+class StarList extends Component {
 
-        super( props );
+    render() {
+        return (
+            <div>
+                <h2>All Stars</h2>
+                <ul>
+                    { this.props.starList.map( star => <Star star={ star } /> )}
+                </ul>
+            </div>
+        );
     }
 }
+
+export default StarList;

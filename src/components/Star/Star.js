@@ -28,7 +28,8 @@ class Star extends Component {
             [ propertyName ]: event.target.value }});
         }
 
-    handleSubmit = () => {
+    handleSubmit = ( event ) => {
+        event.preventDefault();
         this.setState({ starList: [ ...this.state.starList, this.state.star ]});
         this.setState({ star: { starName: '', brightness: '' }});
         console.log( 'The star is: ', this.state.star );
@@ -38,19 +39,21 @@ class Star extends Component {
         return (
             <div>
                 <h2>The Best Star Ever</h2>
+                <form onSubmit={ this.handleSubmit }>
                 <input onChange={ this.handleChange( 'starName' ) }
                 value={ this.state.star.starName } placeholder="Name" />
 
                 <input onChange={ this.handleChange( 'brightness' ) }
                 value={ this.state.star.brightness } placeholder="Brightness" />
 
-                <button onClick={ this.handleSubmit }>Add</button>
+                <input type="submit" value="Add" />
                 <ul>
                 { this.state.starList.map( star => 
-                    <li>{ star.starName } has brightness { star.brightness }</li>
+                    <li key={ star.starName }>{ star.starName } has brightness { star.brightness }</li>
                     )
                 }
                 </ul>
+                </form>
             </div>
         );
     }
